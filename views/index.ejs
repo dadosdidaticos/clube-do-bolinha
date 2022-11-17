@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <% if (typeof(user)!=='undefined'){%>
+      <h2>Olá, <%= user.first_name %>!</h2>
+      <p>Bem vindo ao <%= title %></p>
+      <p><a href="/logout">Logout</a></p>
+    <%}else{%>
+      <p>Este é um clube exlusivo para membros. Você pode se registrar, 
+        mas só um verdadeiro bolinha sabe o que é ser um bolinha.
+      </p>
+      <p>
+        Será que você está pronto?<br>
+        <a href="/register">Registrar-se</a><br><br>
+      </p>
+      <p>
+        já possui login? <a href="/login">entrar</a>
+      </p> 
+    <%}%>
+  </body>
+</html>

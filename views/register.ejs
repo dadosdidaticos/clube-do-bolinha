@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%=title%></title>
+</head>
+<body>
+    <h1>Resgistre-se</h1>
+    <p>Seja um Bolinha também!</p>
+    <form action="" method="POST">
+        <label for="first_name">Nome</label>
+        <input type="text" name="first_name" id="first_name" required="true">
+        <br><br>
+        <label for="last_name">Sobrenome</label>
+        <input type="text" name="last_name" id="last_name" required="true">
+        <br><br>
+        <label for="username">E-mail</label>
+        <input type="text" name="username" id="username" required="true">
+        <br><br>
+        <label for="password">Senha</label>
+        <input type="password" name="password" id="password" required="true">
+        <br><br>
+        <label for="password_confirm">Confirme sua senha</label>
+        <input type="password" name="password_confirm" id="password_confirm" required="true">
+        <br><br>
+        <input type="submit" name="submit" value="Criar conta"> 
+    </form>
+    <ul>
+        <% if (typeof(errors)!=='undefined'){ %>
+            <% errors.forEach((error) => { %>
+                <li><%= error.msg %></li>
+            <%});%>
+        <%}%>
+        <% if (typeof(success)!=='undefined' && success==true){ %>
+                <li>Usuário criado com sucesso! ir para <a href="/">início'</a> </li>
+        <%}%>
+    </ul>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <% if (typeof(user)!=='undefined'){%>
+        <h2>Olá, <%= user.first_name %>!</h2>
+        <p>Boas vindas ao Clube do Bolinha.</p>
+        <a href="/logout">Logout</a>
+        <% if (user.membership_status===true){%>
+            <%}else{%>
+                <p>
+                    O Status atual da sua conta é inativa. O clube do bolinha só pode ser acessado por pessoas
+                    que entenderam uma verdade fundamental sobre homens e mulheres. Essa é a senha do Clube.
+                    Para acessá-lo por completo, insira a senha e seja um Bolinha completo:
+                </p>
+                <form action="/home" method="POST">
+                    <label for="password">Senha do Clube: </label>
+                    <input type="password" name="password" id="password" required="true">
+                    <input type="submit" name="submit" value="Enviar"> 
+                </form>
+            <%}%>
+        <% if (typeof(msg)!=='undefined'){%>
+            <p><%=msg%></p>
+        <%}%>
+        <%- include('board')%>
+
+    <%}%>
+  </body>
+</html>
