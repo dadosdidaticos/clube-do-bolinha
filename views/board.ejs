@@ -1,2 +1,17 @@
-<h1>Mensagens</h1>
-<p>EM CONSTRUÇÃO</p>
+<h2>Nova Mensagem</h2>
+
+<form action="/home/message" method="post">
+    <label for="title">Título: </label>
+    <input type="text" name="title" id="title" required="true">
+    <br>
+    <label for="message">Mensagem: </label>
+    <textarea name="message" id="Message" cols="40" rows="10" placeholder="Insira sua Mensagem aqui (min. de 5 caracteres, máx. de 500)">
+    </textarea>
+    <br>
+    <input type="submit" value="Enviar Mensagem">
+    <% if (typeof(errors)!=='undefined'){ %>
+        <% errors.forEach((error) => { %>
+            <li><%= error.msg %></li>
+        <%});%>
+    <%}%>
+</form>
