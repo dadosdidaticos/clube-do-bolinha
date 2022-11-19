@@ -104,22 +104,22 @@ exports.home_get = (req,res,next)=>{
     if(!req.isAuthenticated()){
         return res.redirect('/')
     }
-    UserSchema.findById(req.user._id,(err,user)=>{
-        if(req.isAuthenticated() && user.membership_status===false){
-            return res.render('home_hero',{
-                title:'Início',
-                user:req.user,
-            })
-        }
-        if(req.isAuthenticated() && user.membership_status===true){
+    // UserSchema.findById(req.user._id,(err,user)=>{
+    //     if(req.isAuthenticated() && user.membership_status===false){
+    //         return res.render('home_hero',{
+    //             title:'Início',
+    //             user:req.user,
+    //         })
+    //     }
+        if(req.isAuthenticated() && req.user.membership_status===true){
             //carregar mensagens aqui depois
             return res.render('home_hero',{
                 title:'Início',
                 user:req.user,
             })
         }
-    })
-}
+    }
+
 
 exports.create_user = [
     body(['first_name','last_name','username','password','password_confirm'])
