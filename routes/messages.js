@@ -10,4 +10,6 @@ router.post('/',UserController.membership)
 
 router.post('/message', MessageController.message_post)
 
+router.get('/message/:messageId/delete',MessageController.message_delete)
+
 module.exports = router

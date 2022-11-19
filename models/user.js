@@ -6,7 +6,8 @@ const UserSchema = new Schema({
     first_name:{type:String, required: true},
     last_name:{type:String, required: true},
     membership_status:{type:Boolean,required:true, default:false},
-    register_date:{type: Date, default: Date.now}
+    register_date:{type: Date, default: Date.now},
+    is_admin:{type:Boolean,required:true, default:false}
 })
 
-module.exports = mongoose.model("User",UserSchema) 
+module.exports = mongoose.model("users",UserSchema) 

@@ -4,7 +4,9 @@ const session = require('express-session')
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require('bcrypt')
 const UserSchema = require('../models/user')
+const Message = require ('../models/message')
 const { body, validationResult } = require('express-validator');
+const { findById, findByIdAndUpdate } = require('../models/user');
 
 passport.use(new LocalStrategy (
     (username,password,done)=>{
@@ -92,10 +94,18 @@ exports.membership = (req,res,next)=>{
             }
         )
     }else{
-        res.render('home_hero',{
-            title:'Início',
-            user:req.user,
-            msg:'A senha está incorreta. Tente novamente.'
+        Message.find({})
+        .populate('user')
+        .exec((err,messages)=>{
+            if(err){
+                return next(err);
+            }
+            return res.render('home_hero',{
+                title:'Início',
+                user:req.user,
+                msg:'A senha está incorreta. Tente novamente.',
+                messages:messages
+            })
         })
     }
 }
@@ -104,22 +114,40 @@ exports.home_get = (req,res,next)=>{
     if(!req.isAuthenticated()){
         return res.redirect('/')
     }
-    // UserSchema.findById(req.user._id,(err,user)=>{
-    //     if(req.isAuthenticated() && user.membership_status===false){
-    //         return res.render('home_hero',{
-    //             title:'Início',
-    //             user:req.user,
-    //         })
-    //     }
-        if(req.isAuthenticated() && req.user.membership_status===true){
-            //carregar mensagens aqui depois
-            return res.render('home_hero',{
-                title:'Início',
-                user:req.user,
-            })
+    
+    Message.find({})
+    .populate('user')
+    .exec((err,messages)=>{
+        if(err){
+            return next(err);
         }
-    }
+        console.log(messages)
+        return res.render('home_hero',{
+            title:'Início',
+            user:req.user,
+            messages:messages
+        })
+    })
+}
 
+exports.update_admin = (req,res,next)=>{
+    if(req.body.isAdmin==='true'){
+        console.log(req.user)
+        UserSchema.findByIdAndUpdate(req.user._id,{is_admin:true},(err,user)=>{
+            if (err){
+                next(err)
+            }
+            res.redirect('/home')
+        })
+    }else{
+        UserSchema.findByIdAndUpdate(req.user._id,{is_admin:false},(err,user)=>{
+            if (err){
+                next(err)
+            }
+            res.redirect('/home')
+        })
+    }
+}
 
 exports.create_user = [
     body(['first_name','last_name','username','password','password_confirm'])
